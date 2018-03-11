@@ -15,7 +15,7 @@ BuildRequires: asciidoc
 BuildRequires: xmlto
 
 Requires: rsync
-Requires: mock >= 1.4.7
+Requires: mock >= 1.1.11
 Requires: xz
 Requires: gzip
 Requires: bzip2
