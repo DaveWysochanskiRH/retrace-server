@@ -147,8 +147,7 @@ fi
 %doc %{_mandir}/man1/%{name}-worker.1*
 %doc %{_mandir}/man1/%{name}-task.1*
 %doc %{_infodir}/%{name}*
-%doc README.md
-%license COPYING
+%doc COPYING README.md
 
 %changelog
 * Thu Feb 01 2018 Matej Marusak <mmarusak@redhat.com> 1.18.0-1
