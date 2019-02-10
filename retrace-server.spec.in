@@ -13,6 +13,7 @@ BuildRequires: libtool
 BuildRequires: texinfo
 BuildRequires: asciidoc
 BuildRequires: xmlto
+BuildRequires: lsof
 
 %{?el6:Requires: python-argparse}
 Requires: rsync
@@ -24,6 +25,7 @@ Requires: tar
 Requires: p7zip
 Requires: unzip
 Requires: lzop
+Requires: lsof
 Requires: elfutils
 Requires: createrepo >= 0.9.9-27
 %if 0%{?fedora} > 27
