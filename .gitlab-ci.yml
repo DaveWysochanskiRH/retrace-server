@@ -1,0 +1,24 @@
+stages:
+- build
+- install
+
+build:
+  stage: build
+  script:
+    - ./autogen.sh
+    - make rpm
+    - ls -lh ./noarch/retrace-server-$(cat ./retrace-server-version)*.noarch.rpm
+  artifacts:
+    paths:
+    - ./retrace-server-version
+    - ./noarch/retrace-server-$(cat ./retrace-server-version)*.noarch.rpm
+  tags:
+    - retrace-server
+
+install:
+  stage: install
+  script:
+    - sudo dnf localinstall -y ./noarch/retrace-server-$(cat ./retrace-server-version)*.noarch.rpm
+    - sudo systemctl restart httpd
+  tags:
+    - retrace-server
