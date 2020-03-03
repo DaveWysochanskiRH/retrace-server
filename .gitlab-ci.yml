@@ -4,6 +4,8 @@ stages:
 
 build:
   stage: build
+  only:
+    - galvatron-dev
   script:
     - ./autogen.sh
     - make rpm
@@ -17,6 +19,8 @@ build:
 
 install:
   stage: install
+  only:
+    - galvatron-dev
   script:
     - sudo dnf localinstall -y ./noarch/retrace-server-$(cat ./retrace-server-version)*.noarch.rpm
     - sudo systemctl restart httpd
