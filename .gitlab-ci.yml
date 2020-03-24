@@ -19,7 +19,7 @@ rollback:
     - ./retrace-server-version
     - ./noarch/retrace-server-$(cat ./retrace-server-version)*.noarch.rpm
   tags:
-    - retrace-server
+    - retrace-server-development
   when: on_failure
 
 build:
@@ -35,7 +35,7 @@ build:
     - ./retrace-server-version
     - ./noarch/retrace-server-$(cat ./retrace-server-version)*.noarch.rpm
   tags:
-    - retrace-server
+    - retrace-server-development
 
 install:
   stage: install
@@ -45,4 +45,4 @@ install:
     - sudo dnf localinstall -y ./noarch/retrace-server-$(cat ./retrace-server-version)*.noarch.rpm
     - sudo systemctl restart httpd
   tags:
-    - retrace-server
+    - retrace-server-development
