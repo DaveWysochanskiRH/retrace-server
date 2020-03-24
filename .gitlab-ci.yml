@@ -1,6 +1,26 @@
 stages:
 - build
 - install
+- rollback
+
+rollback:
+  stage: rollback
+  only:
+    - galvatron-dev
+  script:
+    - git checkout galvatron-stable && git pull
+    - ./autogen.sh
+    - make rpm
+    - ls -lh ./noarch/retrace-server-$(cat ./retrace-server-version)*.noarch.rpm
+    - sudo dnf localinstall -y ./noarch/retrace-server-$(cat ./retrace-server-version)*.noarch.rpm
+    - sudo systemctl restart httpd
+  artifacts:
+    paths:
+    - ./retrace-server-version
+    - ./noarch/retrace-server-$(cat ./retrace-server-version)*.noarch.rpm
+  tags:
+    - retrace-server
+  when: on_failure
 
 build:
   stage: build
