@@ -1,3 +1,28 @@
+# Workflow
+# 0. Create a topic branch based off of 'master' and test
+# * PASS: put in PR to 'dev' and go to step #1
+# * FAIL: revert to 'last known good'
+#
+# 1. Merge topic to 'dev' and test
+# * PASS: put in PR to 'prod' and go to step #2
+# * FAIL: revert to 'last known good'
+#
+# 2. Merge 'dev' to 'prod' and test
+# * PASS: put in PR to 'master' and go to step #3
+# * FAIL: revert to 'last known good'
+#
+# 3. Push to 'master'
+#
+# Revert
+# a) Use 'master' branch for 'last known good' where at all possible.
+# * NOTE: There is also a 'galvatron-stable' that can be used but must be kept updated
+# b) Use '--force' on 'prod' and 'dev' branches for revert.
+# * NOTE: Since 'prod' is protected branch in gitlab, you must first unprotect before --force push
+# * See https://gitlab.com/gitlab-org/gitlab-foss/issues/63436
+#
+# NOTE: For pulls from upstream abrt project, use 'upstream' as topic branch,
+# then go to step 0
+#
 stages:
 - build
 - install
