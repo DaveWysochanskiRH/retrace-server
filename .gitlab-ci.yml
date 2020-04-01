@@ -24,14 +24,17 @@
 # then go to step 0
 #
 stages:
-- build
-- install
+- build_dev
+- install_dev
+- build_prod
+- install_prod
 - rollback
 
 rollback:
   stage: rollback
   only:
     - galvatron-dev
+    - galvatron-prod
   script:
     - git checkout galvatron-stable && git pull
     - ./autogen.sh
@@ -45,10 +48,11 @@ rollback:
     - ./noarch/retrace-server-$(cat ./retrace-server-version)*.noarch.rpm
   tags:
     - retrace-server-development
+    - retrace-server-production
   when: on_failure
 
-build:
-  stage: build
+build_dev:
+  stage: build_dev
   only:
     - galvatron-dev
   script:
@@ -62,8 +66,8 @@ build:
   tags:
     - retrace-server-development
 
-install:
-  stage: install
+install_dev:
+  stage: install_dev
   only:
     - galvatron-dev
   script:
@@ -71,3 +75,28 @@ install:
     - sudo systemctl restart httpd
   tags:
     - retrace-server-development
+
+build_prod:
+  stage: build_prod
+  only:
+    - galvatron-prod
+  script:
+    - ./autogen.sh
+    - make rpm
+    - ls -lh ./noarch/retrace-server-$(cat ./retrace-server-version)*.noarch.rpm
+  artifacts:
+    paths:
+    - ./retrace-server-version
+    - ./noarch/retrace-server-$(cat ./retrace-server-version)*.noarch.rpm
+  tags:
+    - retrace-server-production
+
+install_prod:
+  stage: install_prod
+  only:
+    - galvatron-prod
+  script:
+    - sudo dnf localinstall -y ./noarch/retrace-server-$(cat ./retrace-server-version)*.noarch.rpm
+    - sudo systemctl restart httpd
+  tags:
+    - retrace-server-production
