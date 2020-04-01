@@ -56,6 +56,7 @@ build_dev:
   only:
     - galvatron-dev
   script:
+    - ./autogen.sh sysdeps --install
     - ./autogen.sh
     - make rpm
     - ls -lh ./noarch/retrace-server-$(cat ./retrace-server-version)*.noarch.rpm
@@ -81,6 +82,7 @@ build_prod:
   only:
     - galvatron-prod
   script:
+    - ./autogen.sh sysdeps --install
     - ./autogen.sh
     - make rpm
     - ls -lh ./noarch/retrace-server-$(cat ./retrace-server-version)*.noarch.rpm
